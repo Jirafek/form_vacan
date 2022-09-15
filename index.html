@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Form</title>
+</head>
+<body>
+    <form action="send.php" method="POST">
+        <h1 class="form_name">Заполнение формы</h1>
+        <h1 class="form_name2"></h1>
+        <div class="instruction hidden">
+            <p class="instruction-head"></p>
+            <p class="instruction-body"></p>
+        </div>
+        <div class="form_body">
+            <div class="form_body-item">
+                <label for="surname">Фамилия</label>
+                <input required autofocus class="form_input" type="text" name="surname" placeholder="Зайцев">
+            </div>
+            <div class="form_body-item">
+                <label for="name">Имя</label>
+                <input required class="form_input" type="text" name="name" placeholder="Михаил">
+            </div>
+            <div class="form_body-item">
+                <label for="phone">Телефон</label>
+                <input required class="form_input" type="text" name="phone" placeholder="+7 (_ _ _) _ _  _ _  _ _ _">
+            </div>
+            <div class="form_body-item">
+                <label for="phone_mes">Телефон привязан к мессенджеру</label>
+                <select class="form_input" name="phone_mes" id="phone_mes">
+                    <option value="Telegram">Telegram</option>
+                    <option value="Viber">Viber</option>
+                    <option value="Сигнал">Сигнал</option>
+                    <option value="Telegram">Не подвязан</option>
+                </select>
+            </div>
+            <div class="form_body-item">
+                <label for="mail">E-mail</label>
+                <input required class="form_input" type="text" name="mail" placeholder="example@mail.ru">
+            </div>
+            <div class="form_body-item">
+                <label for="date">Год рождения</label>
+                <input required class="form_input" type="date" name="date" placeholder="Год рождения">
+            </div>
+            <div class="form_body-item">
+                <label for="city">Город проживания</label>
+                <input required class="form_input" type="text" name="city" placeholder="Москва">
+            </div>
+            <div class="form_body-item">
+                <label for="english">Уровень английского</label>
+                <select class="form_input" name="english" id="english">
+                    <option value="Starter(A0)">Starter(A0)</option>
+                    <option value="Beginner(A1)">Beginner(A1)</option>
+                    <option value="Elementary(A2)">Elementary(A2)</option>
+                    <option value="Intermediate(B1)">Intermediate(B1)</option>
+                    <option value="Upper Intermediate(B2)">Upper Intermediate(B2)</option>
+                    <option value="Advanced(C1)">Advanced(C1)</option>
+                    <option value="Proficiency(C2)">Proficiency(C2)</option>
+                </select>
+            </div>
+            <div class="form_body-item">
+                <label for="money">Желаемый уровень зарплаты</label>
+                <input required class="form_input" type="text" name="money" placeholder="$ 1000">
+            </div>
+            <div class="form_body-item">
+                <label for="time">Сколько часов в день готовы уделять работе?</label>
+                <input required class="form_input" type="text" name="time" placeholder="5 часов">
+            </div>
+            <div class="form_body-item">
+                <label for="recomend">Узнали о на по рекомендации?</label>
+                <input required class="form_input" type="text" name="recomend" placeholder="Да">
+            </div>
+            <div class="form_body-item">
+                <label for="work">Желаемая должность</label>
+                <select class="form_input" name="work" id="work">
+                    <option value="Telegram">Оператор чата</option>
+                    <option value="Viber">Администратор чата</option>
+                    <option value="Сигнал">Скаут</option>
+                </select>
+            </div>
+            <input readonly class="hidden input_answer" type="text" name="answer">
+        </div>
+        <div class="questions"></div>
+        <div class="submit_body">
+            <!-- <input type="submit" class="submit_btn" > -->
+            <button type="button" class="submit_btn go_test">отправить</button>
+        </div>
+        <img class="form_image" src="./image/Illustration.png" alt="">
+    </form>
+    <script src="./script.js"></script>
+</body>
+</html>
