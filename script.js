@@ -6,6 +6,11 @@ const form_image = document.querySelector('.form_image');
 const form_name = document.querySelector('.form_name');
 const questions_block = document.querySelector('.questions');
 const grey_block = document.querySelector('.instruction');
+const timer = document.querySelector('.timer');
+const min_block = document.querySelector('.min');
+const sec_block = document.querySelector('.sec');
+let min = 12;
+let sec = 0;
 const answers = ['A', 'A', 'B', 'A', 'A', 'B', 'B', 'A', 'B', 'B', 'A', 'A', 'A', 'B', 'B', 'A', 'B', 'A', 'B', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'A', 'A', 'A'];
 
 const questions = [
@@ -133,6 +138,8 @@ const questions = [
 
 go_test_btn.addEventListener('click', startCheckingTest);
 
+let already_answered = [];
+
 function countBalls(arr, num) {
     return arr[num - 1] === answers[num - 1] ? 1 : 0;
 }
@@ -156,9 +163,35 @@ function test() {
     document.querySelector('.instruction-body').innerHTML = 'Вам предлагаются попарно утверждения, описывающие индивидуальные типологические особенности личности; оцените их по степени значимости для Вас и выберите одно из них, которое в большей степени характеризует Вас. На против своего выбора, поставьте галочку, что будет означать ответ – «Да» (Согласен). Отвечать рекомендуется быстро, особо не задумываясь. Время для прохождения теста 12 минут.';
 
     createQuestions();
+    createAnsweredQuestions();
+}
+
+function createAnsweredQuestions() {
+    const block = document.querySelector('.count_answers');
+    block.innerHTML = '';
+    block.classList.remove('hidden');
+    for (let i=0;i<30;i++) {
+        let num = document.createElement('div');
+        num.innerHTML = i+1;
+        num.classList.add('count_answers-item');
+
+        if (already_answered.includes(i)) {
+            num.classList.add('answered');
+        }
+
+        block.appendChild(num);
+    }
+}
+
+function changeCheckedData() {
+    const numbers = document.querySelectorAll('.count_answers-item');
+    for (let i=0;i<already_answered.length;i++) {
+        numbers[already_answered[i]].classList.add('answered');
+    }
 }
 
 function createQuestions() {
+    timer.classList.remove('hidden');
     for (let i=0;i<questions.length;i++) {
         const div = document.createElement('div');
         const text = document.createElement('p');
@@ -178,6 +211,13 @@ function createQuestions() {
         question_1_block.appendChild(question_1);
         question_1_block.appendChild(question_1_label);
 
+        question_1.addEventListener('change', () => {
+            if (!already_answered.includes(i)) {
+                already_answered.push(i);
+                changeCheckedData();
+            }
+        });
+
         const question_2 = document.createElement('input');
         question_2.value = 'B';
         question_2.type = 'radio';
@@ -186,6 +226,13 @@ function createQuestions() {
         const question_2_label = document.createElement('label');
         question_2_label.for = `que-${i}-2`;
         question_2_label.innerHTML = questions[i][2];
+
+        question_2.addEventListener('change', () => {
+            if (!already_answered.includes(i)) {
+                already_answered.push(i);
+                changeCheckedData();
+            }
+        });
 
         const question_2_block = document.createElement('div');
         question_2_block.appendChild(question_2);
@@ -207,6 +254,22 @@ function createQuestions() {
         questions_block.appendChild(div);
     }
 
+    
+
+    let interval = setInterval(() => {
+        if (min === 0 && sec === 0) {
+            clearInterval(interval);
+            location.reload();
+        } else if (sec === 0) {
+            min -= 1;
+            sec = 59;
+        } else if (sec > 0) {
+            sec -= 1;
+        }
+        min_block.innerHTML = `${min < 10 ? `0${min}` : min}`;
+        sec_block.innerHTML = `${sec < 10 ? `0${sec}` : sec}`;
+    }, 1000)
+
     setTimeout(() => {
         go_test_btn.type = 'button';
         go_test_btn.removeEventListener('click', startCheckingTest);
@@ -224,11 +287,12 @@ function createQuestions() {
                 const agr = countBalls(answers_arr, 5) + countBalls(answers_arr, 9) + countBalls(answers_arr, 21) + countBalls(answers_arr, 15) + countBalls(answers_arr, 23) + countBalls(answers_arr, 28)
                 const lie = countBalls(answers_arr, 6) + countBalls(answers_arr, 19) + countBalls(answers_arr, 8) + countBalls(answers_arr, 21) + countBalls(answers_arr, 11) + countBalls(answers_arr, 22) + countBalls(answers_arr, 14) + countBalls(answers_arr, 24)
                 let answers = `Экстраверсия - ${eks}, Ригидность - ${rig}, Спонтанность - ${spon}, Агрессивность - ${agr}, Лож - ${lie}, 1 - ${answers_arr[0]}, 30 - ${answers_arr[29]}`
-                document.querySelector('.input_answer').value = `Экстраверсия - ${eks}, Ригидность - ${rig}, Спонтанность - ${spon}, Агрессивность - ${agr}, Лож - ${lie}, 1 - ${answers_arr[0]}, 30 - ${answers_arr[29]}`;
+                document.querySelector('.input_answer').value = answers;
                 setTimeout(() => {
                     form.submit();
                 }, 1000);
             } else {
+                document.querySelector('.error_message').innerHTML = 'Ответьте на все вопросы';
                 throw new Error('Answer all questions');
             }
         })

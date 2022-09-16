@@ -76,8 +76,12 @@ label {
     margin-top: 85px;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     justify-content: center;
     z-index: 11;
+    padding-bottom: 20px;
 }
 
 .form_image {
@@ -97,7 +101,7 @@ label {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .questions-number {
@@ -132,6 +136,48 @@ label {
     font-size: 24px;
 }
 
+.timer {
+    font-family: 'Euclid_L';
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.min, .sec {
+    width: 30px;
+}
+
+.error_message {
+    color: red;
+    font-size: 24px;
+    font-family: 'Euclid_L';
+}
+
+.count_answers {
+    width: 750px;
+    margin: 25px auto 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.count_answers-item {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.03);
+    background-color: #FAFAFA;
+    transition: all .5s;
+    font-family: 'Euclid_L';
+    font-size: 24px;
+}
+
+.answered {
+    background-color: #24C5DB !important;
+}
+
 @media (max-width: 1200px) {
 
     .form {
@@ -150,6 +196,16 @@ label {
         padding: 20px 40px;
     }
     .instruction-body, .instruction-head {
+        font-size: 18px;
+    }
+    .count_answers {
+        width: 300px;
+        justify-content: center;
+    }
+    .count_answers-item {
+        height: 40px;
+        width: 40px;
+        font-family: 'Euclid_L';
         font-size: 18px;
     }
 
